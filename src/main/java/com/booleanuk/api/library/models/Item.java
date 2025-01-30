@@ -7,11 +7,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "items")
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "item_type")
+    private ItemType itemType;
 
     @Column(name = "title")
     private String title;
@@ -28,15 +32,16 @@ public class Book {
     @Column(name = "genre")
     private String genre;
 
-    public Book(String title, String author, String publisher, int year, String genre) {
+    public Item(String title, ItemType itemType, String author, String publisher, int year, String genre) {
         this.title = title;
+        this.itemType = itemType;
         this.author = author;
         this.publisher = publisher;
         this.year = year;
         this.genre = genre;
     }
 
-    public Book(int id) {
+    public Item(int id) {
         this.id = id;
     }
 }
