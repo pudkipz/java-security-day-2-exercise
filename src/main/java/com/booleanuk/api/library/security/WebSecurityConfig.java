@@ -54,11 +54,10 @@ public class WebSecurityConfig {
                 .exceptionHandling((exception) -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.PUT, "/items/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/items/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/items/**").hasRole("ADMIN")
-                        .requestMatchers("/items", "/items/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
+                        .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole( "ADMIN", "USER")
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/users").permitAll()
                 );
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

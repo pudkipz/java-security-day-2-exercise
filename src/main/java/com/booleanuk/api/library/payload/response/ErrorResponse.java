@@ -9,6 +9,10 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor
 public class ErrorResponse extends Response<Map<String, String>> {
+    public ErrorResponse(String message) {
+        set(message);
+    }
+
     public void set(String message) {
         this.status = "error";
 

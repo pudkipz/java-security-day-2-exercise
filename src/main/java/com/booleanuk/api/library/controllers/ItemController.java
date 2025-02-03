@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("items")
+@RequestMapping
 public class ItemController {
     @Autowired
     private ItemRepository itemRepository;
@@ -24,7 +24,7 @@ public class ItemController {
         return ResponseEntity.ok(itemListResponse);
     }
 
-    @PostMapping
+    @PostMapping("/admin/items")
     public ResponseEntity<Response<?>> createItem(@RequestBody Item item) {
         ItemResponse itemResponse = new ItemResponse();
         try {
@@ -37,7 +37,7 @@ public class ItemController {
         return new ResponseEntity<>(itemResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("users/{id}")
     public ResponseEntity<Response<?>> getItemById(@PathVariable int id) {
         Item item = this.itemRepository.findById(id).orElse(null);
         if (item == null) {
@@ -50,7 +50,7 @@ public class ItemController {
         return ResponseEntity.ok(itemResponse);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}")
     public ResponseEntity<Response<?>> updateItem(@PathVariable int id, @RequestBody Item item) {
         Item itemToUpdate = this.itemRepository.findById(id).orElse(null);
         if (itemToUpdate == null) {
@@ -76,7 +76,7 @@ public class ItemController {
         return new ResponseEntity<>(itemResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<Response<?>> deleteItem(@PathVariable int id) {
         Item itemToDelete = this.itemRepository.findById(id).orElse(null);
         if (itemToDelete == null) {
